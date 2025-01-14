@@ -1,0 +1,11 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="flex items-center justify-center min-h-screen bg-red-100 text-red-800">
+  <div class="text-center">
+    <h1 class="text-6xl font-bold mb-4">Error <%= statusCode %></h1>
+    <p class="text-xl mb-6"><%= message %></p>
+    <a href="/listings" class="bg-red-800 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-900">
+      Go Back to Homepage
+    </a>
+  </div>
+</div>
