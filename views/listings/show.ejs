@@ -1,22 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= listing.title %></title>
-</head>
-<body>
-    <h1><%= listing.title %></h1>
-    <p><%= listing.description %></p>
-    <p>Price:₹<%= listing.price.toLocaleString("en-IN") %></p>
-    <p>Location: <%= listing.location %></p>
-    <p>Country: <%= listing.country %></p>
-    <img src="<%= listing.image.url %>" alt="<%= listing.title %>">
-    <a href="/listings">Back to listings</a>
-    <a href="/listings/<%= listing.id %>/edit">Edit</a>
-    <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST">
-        <button>Delete</button>
+<% layout('layouts/boilerplate') %>
 
-    
+<body class="bg-gray-100">
+  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4"><%= listing.title %></h1>
+    <img
+      src="<%= listing.image.url %>"
+      alt="<%= listing.title %>"
+      class="w-full h-64 object-cover rounded-md mb-6"
+    />
+    <div class="space-y-4">
+      <p class="text-lg text-gray-700">
+        <span class="font-medium text-gray-900">Description:</span> <%= listing.description %>
+      </p>
+      <p class="text-lg text-gray-700">
+        <span class="font-medium text-gray-900">Price:</span> ₹<%= listing.price.toLocaleString("en-IN") %>
+      </p>
+      <p class="text-lg text-gray-700">
+        <span class="font-medium text-gray-900">Location:</span> <%= listing.location %>
+      </p>
+      <p class="text-lg text-gray-700">
+        <span class="font-medium text-gray-900">Country:</span> <%= listing.country %>
+      </p>
+    </div>
+
+    <div class="mt-6 flex items-center gap-4">
+      <a
+        href="/listings"
+        class="text-blue-600 hover:text-blue-700 font-medium transition"
+      >
+        &larr; Back to Listings
+      </a>
+      <a
+        href="/listings/<%= listing.id %>/edit"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded shadow transition"
+      >
+        Edit
+      </a>
+      <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST" class="inline">
+        <button
+          type="submit"
+          class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded shadow transition"
+        >
+          Delete
+        </button>
+      </form>
+    </div>
+  </div>
 </body>
-</html>
