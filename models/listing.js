@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-// const Review = require('./review.js');
+const Review = require('./review.js');
 
 const defaultImg = "https://img.freepik.com/free-vector/wanderlust-explore-adventure-landscape_24908-55313.jpg";
 
@@ -23,18 +23,18 @@ const listingSchema = new Schema({
   price: { type: Number, required: true },
   location: { type: String, required: true, set: (v) => v.toUpperCase() },
   country: { type: String, set: (v) => v.toUpperCase() },
-  // reviews: [
-  //     {
-  //         type: Schema.Types.ObjectId,
-  //         ref: "Review",
-  //     },
-  // ],
+  reviews: [
+      {
+          type: Schema.Types.ObjectId,
+          ref: "Review",
+      },
+  ],
 });
 
-// listingSchema.post('findOneAndDelete', async (listing) => {
-//     if (listing) {
-//         await Review.deleteMany({ _id: { $in: listing.reviews } });
-//     }
-// });
+listingSchema.post('findOneAndDelete', async (listing) => {
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } });
+    }
+});
 
 module.exports = mongoose.model("Listing", listingSchema);

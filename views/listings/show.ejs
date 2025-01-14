@@ -1,49 +1,143 @@
 <% layout('layouts/boilerplate') %>
 
-<body class="bg-gray-100">
-  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4"><%= listing.title %></h1>
-    <img
-      src="<%= listing.image.url %>"
-      alt="<%= listing.title %>"
-      class="w-full h-64 object-cover rounded-md mb-6"
-    />
-    <div class="space-y-4">
+<body class="bg-gray-50">
+  <div class="max-w-4xl mx-auto mt-12 p-8 bg-white rounded-lg shadow-xl">
+    <!-- Title and Image -->
+    <h1 class="text-5xl font-extrabold text-gray-800 mb-6 text-center"><%= listing.title %></h1>
+    <div class="overflow-hidden rounded-lg">
+      <img
+        src="<%= listing.image.url %>"
+        alt="<%= listing.title %>"
+        class="w-full h-72 object-cover mb-8 shadow-lg"
+      />
+    </div>
+
+    <!-- Details Section -->
+    <div class="space-y-6">
       <p class="text-lg text-gray-700">
-        <span class="font-medium text-gray-900">Description:</span> <%= listing.description %>
+        <span class="font-semibold text-gray-900">Description:</span> <%= listing.description %>
       </p>
       <p class="text-lg text-gray-700">
-        <span class="font-medium text-gray-900">Price:</span> ₹<%= listing.price.toLocaleString("en-IN") %>
+        <span class="font-semibold text-gray-900">Price:</span> 
+        <span class="text-green-600 font-bold">₹<%= listing.price.toLocaleString("en-IN") %></span>
       </p>
       <p class="text-lg text-gray-700">
-        <span class="font-medium text-gray-900">Location:</span> <%= listing.location %>
+        <span class="font-semibold text-gray-900">Location:</span> <%= listing.location %>
       </p>
       <p class="text-lg text-gray-700">
-        <span class="font-medium text-gray-900">Country:</span> <%= listing.country %>
+        <span class="font-semibold text-gray-900">Country:</span> <%= listing.country %>
       </p>
     </div>
 
-    <div class="mt-6 flex items-center gap-4">
+    <!-- Action Buttons -->
+    <div class="mt-8 flex items-center gap-4">
       <a
         href="/listings"
-        class="text-blue-600 hover:text-blue-700 font-medium transition"
+        class="text-blue-500 hover:text-blue-700 font-semibold transition duration-200"
       >
         &larr; Back to Listings
       </a>
       <a
         href="/listings/<%= listing.id %>/edit"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded shadow transition"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
       >
         Edit
       </a>
       <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST" class="inline">
         <button
           type="submit"
-          class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded shadow transition"
+          class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
         >
           Delete
         </button>
       </form>
+    </div>
+
+    <!-- Leave a Review Section -->
+    <div class="mt-12 bg-gray-50 p-6 rounded-lg shadow-lg">
+      <h4 class="text-3xl font-semibold text-gray-900 mb-6">Leave a Review</h4>
+      <form
+        action="/listings/<%= listing._id %>/reviews"
+        method="POST"
+        class="space-y-6"
+      >
+        <div>
+          <label for="rating" class="block text-gray-700 font-medium mb-2">Rating</label>
+          <div class="flex items-center space-x-2">
+            <% for (let i = 1; i <= 5; i++) { %>
+              <input
+                type="radio"
+                id="star-<%= i %>"
+                name="review[rating]"
+                value="<%= i %>"
+                class="hidden peer"
+                required
+              />
+              <label
+                for="star-<%= i %>"
+                class="text-gray-300 hover:text-yellow-500 cursor-pointer peer-checked:text-yellow-500"
+              >
+                <i class="fas fa-star text-2xl"></i>
+              </label>
+            <% } %>
+          </div>
+        </div>
+        <div>
+          <label for="content" class="block text-gray-700 font-medium mb-2">Comments</label>
+          <textarea
+            id="content"
+            name="review[content]"
+            cols="30"
+            rows="4"
+            required
+            class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-md font-semibold hover:bg-blue-700 transition duration-200"
+        >
+          Submit Review
+        </button>
+      </form>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="mt-12">
+      <h4 class="text-3xl font-semibold text-gray-900 mb-8">All Reviews</h4>
+      <div class="space-y-6">
+        <% if (listing.reviews && listing.reviews.length > 0) { %>
+          <% listing.reviews.forEach(review => { %>
+            <div class="bg-gray-50 p-6 rounded-lg shadow-md relative">
+              <p class="text-gray-700 mb-2 flex items-center">
+                <span class="font-semibold mr-2">Rating:</span> 
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <% if (i <= review.rating) { %>
+                    <i class="fas fa-star text-yellow-500"></i>
+                  <% } else { %>
+                    <i class="fas fa-star text-gray-300"></i>
+                  <% } %>
+                <% } %>
+              </p>
+              <p class="text-gray-800"><%= review.content %></p>
+              <form
+                action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                method="POST"
+                class="absolute top-4 right-4"
+              >
+                <button
+                  type="submit"
+                  class="text-red-500 text-xl rounded-lg bg-gray-100 hover:text-red-700 p-2 transition duration-200"
+                >
+                  ✕
+                </button>
+              </form>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p class="text-gray-500 text-lg">No reviews yet. Be the first to leave one!</p>
+        <% } %>
+      </div>
     </div>
   </div>
 </body>
