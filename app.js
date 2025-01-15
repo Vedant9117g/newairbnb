@@ -15,6 +15,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const userRoutes = require('./routes/user');
 
+
 const app = express();
 const port = 8080;
 const MONGO_URL = 'mongodb://127.0.0.1:27017/newairbnb';
@@ -61,6 +62,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    res.locals.currUser = req.user
     next();
 });
 
