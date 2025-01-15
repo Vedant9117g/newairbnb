@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
+  <div class="bg-white shadow-lg rounded-lg w-3/4 lg:w-1/3 p-8">
+    <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-6">Welcome Back!</h2>
+    <p class="text-sm text-gray-500 text-center mb-6">
+      Login to access your account.
+    </p>
+    <form method="post" action="/login" class="space-y-6">
+      <!-- Username Field -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          class="w-full py-3 px-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-lg shadow-md hover:from-purple-500 hover:to-pink-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+
+    <!-- Sign Up Redirect -->
+    <p class="mt-6 text-center text-sm text-gray-500">
+      New here?
+      <a href="/signup" class="font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+        Create an account
+      </a>
+    </p>
+  </div>
+</div>

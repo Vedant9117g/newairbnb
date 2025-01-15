@@ -10,6 +10,10 @@ const listingRoutes = require('./routes/listing');
 const reviewRoutes = require('./routes/review');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+const userRoutes = require('./routes/user');
 
 const app = express();
 const port = 8080;
@@ -47,14 +51,37 @@ app.use(session(sessionOption));
 
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));   
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 });
 
+
+app.get("/demouser",async(req,res)=>{
+
+    let fakeUser = new User
+    ({
+        email:"studen@gmail.com",
+        username:"ved"
+    });
+
+    let registeredUser = await User.register(fakeUser,"helloworld");
+    res.send(registeredUser);
+});
+
+
+
 app.use('/listings', listingRoutes);
 app.use('/listings/:id/reviews', reviewRoutes);
+app.use('/', userRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World');
