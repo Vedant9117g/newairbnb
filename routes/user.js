@@ -43,6 +43,7 @@ router.post(
         failureFlash: true,
     }),
     async (req, res) => {
+        console.log("Logged in User:", req.user); 
         req.flash("success", "Welcome back to Wanderlust!");
         res.redirect(res.locals.redirectUrl || "/listings");
     }

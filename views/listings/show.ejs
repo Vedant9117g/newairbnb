@@ -15,6 +15,9 @@
     <!-- Details Section -->
     <div class="space-y-6">
       <p class="text-lg text-gray-700">
+        <span class="font-semibold text-gray-900">Owner:</span> <i><%= listing.owner.username %></i>
+      </p>
+      <p class="text-lg text-gray-700">
         <span class="font-semibold text-gray-900">Description:</span> <%= listing.description %>
       </p>
       <p class="text-lg text-gray-700">
@@ -37,24 +40,29 @@
       >
         &larr; Back to Listings
       </a>
-      <a
-        href="/listings/<%= listing.id %>/edit"
-        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
-      >
-        Edit
-      </a>
-      <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST" class="inline">
-        <button
-          type="submit"
-          class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
+
+      <% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+        <a
+          href="/listings/<%= listing.id %>/edit"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
         >
-          Delete
-        </button>
-      </form>
+          Edit
+        </a>
+        <form action="/listings/<%= listing.id %>?_method=DELETE" method="POST" class="inline">
+          <button
+            type="submit"
+            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
+          >
+            Delete
+          </button>
+        </form>
+      <% } %>
+     
     </div>
 
     <!-- Leave a Review Section -->
     <div class="mt-12 bg-gray-50 p-6 rounded-lg shadow-lg">
+      <% if (currUser) { %>
       <h4 class="text-3xl font-semibold text-gray-900 mb-6">Leave a Review</h4>
       <form
         action="/listings/<%= listing._id %>/reviews"
@@ -100,6 +108,9 @@
           Submit Review
         </button>
       </form>
+      <% } else { %>
+        <p class="text-gray-500 text-lg">Please <a href="/login" class="text-blue-500 hover:underline">login</a> to leave a review.</p>
+      <% } %>
     </div>
 
     <!-- Reviews Section -->
@@ -109,6 +120,7 @@
         <% if (listing.reviews && listing.reviews.length > 0) { %>
           <% listing.reviews.forEach(review => { %>
             <div class="bg-gray-50 p-6 rounded-lg shadow-md relative">
+              <p class="text-gray-600 text-sm">- <%= review.author.username %></p>
               <p class="text-gray-700 mb-2 flex items-center">
                 <span class="font-semibold mr-2">Rating:</span> 
                 <% for (let i = 1; i <= 5; i++) { %>
