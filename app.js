@@ -9,8 +9,12 @@ const MONGO_URL = 'mongodb://127.0.0.1:27017/newairbnb';
 const methodOverride = require('method-override');
 const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
+<<<<<<< HEAD
 const { listingsSchema, reviewsSchema } = require('./utils/schema');
 const Review = require('./models/review');
+=======
+const listingSchema = require('./utils/schema');
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
 
 // Connect to MongoDB
 mongoose
@@ -40,6 +44,7 @@ const validateListing = (req, res, next) => {
     }
 }
 
+<<<<<<< HEAD
 
 const validateReview = (req, res, next) => {
     let result = reviewsSchema.validate(req.body);
@@ -54,11 +59,17 @@ const validateReview = (req, res, next) => {
 }
 
 
+=======
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+<<<<<<< HEAD
 app.get('/listings', wrapAsync(async (req, res) => {
+=======
+app.get('/listings',validateListing, wrapAsync(async (req, res) => {
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
 }));
@@ -69,7 +80,11 @@ app.get('/listings/new', (req, res) => {
 });
 
 // Show form to create new listing
+<<<<<<< HEAD
 app.get('/listings/:id',wrapAsync(async (req, res) => {
+=======
+app.get('/listings/:id',validateListing, wrapAsync(async (req, res) => {
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
     const { id } = req.params;
     const listing = await Listing.findById(id).populate('reviews');
     res.render("listings/show.ejs", { listing });
@@ -86,7 +101,11 @@ app.post('/listings',validateListing, wrapAsync (async (req, res,next ) => {
 }));
 
 // Edit listing form
+<<<<<<< HEAD
 app.get('/listings/:id/edit',wrapAsync( async (req, res) => {
+=======
+app.get('/listings/:id/edit',validateListing,wrapAsync( async (req, res) => {
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
     const { id } = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/edit.ejs", { listing });
@@ -108,6 +127,7 @@ app.delete('/listings/:id', wrapAsync(async (req, res) => {
     await Listing.findByIdAndDelete(id);
     res.redirect('/listings');
 }));
+<<<<<<< HEAD
 
 
 app.post('/listings/:id/reviews', validateReview,wrapAsync(async (req, res) => {  
@@ -128,6 +148,8 @@ app.delete('/listings/:id/reviews/:reviewId', wrapAsync(async (req, res) => {
     res.redirect(`/listings/${id}`);
 }));
 
+=======
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
 
 
 // app.get('/test', async (req, res) => {

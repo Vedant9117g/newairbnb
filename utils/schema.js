@@ -1,7 +1,11 @@
 const Joi = require('joi');
 
 module.exports.listingsSchema = Joi.object({
+<<<<<<< HEAD
     listing: Joi.object({
+=======
+        listing: Joi.object({
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
         title: Joi.string().required(),
         description: Joi.string().required(),
         location: Joi.string().required(),
@@ -12,6 +16,7 @@ module.exports.listingsSchema = Joi.object({
         }).optional(),
     }).required(),
 });
+<<<<<<< HEAD
 
 
 
@@ -23,3 +28,5 @@ module.exports.reviewsSchema = Joi.object({
     }).required(),
 
 });
+=======
+>>>>>>> a184392624898e4e81bb75463bd15d7e5bf611e1
