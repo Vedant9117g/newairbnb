@@ -2,7 +2,7 @@
 
 <h2 class="text-3xl font-bold text-gray-800 mb-6">Edit Listing</h2>
 
-<form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="space-y-6">
+<form action="/listings/<%= listing._id %>?_method=PUT" method="POST" class="space-y-6" enctype="multipart/form-data">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="form-group">
       <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
@@ -62,13 +62,17 @@
     ><%= listing.description %></textarea>
   </div>
 
+<div>
+  <label for="description" class="block text-sm font-medium text-gray-700">Original Image </label>
+  <img src="<%= listing.image.url %>" class="w-64 object-cover" alt="Image not available" />
+
+</div>
   <div class="form-group">
-    <label for="image" class="block text-sm font-medium text-gray-700">Image URL (Optional)</label>
+    <label for="image" class="block text-sm font-medium text-gray-700">Upload New Image (Optional)</label>
     <input
-      type="text"
+      type="file"
       id="image"
-      name="listing[image][url]"
-      value="<%= listing.image.url %>"
+      name="listing[image]"
       class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
       placeholder="Enter image URL or leave blank for default"
     />
