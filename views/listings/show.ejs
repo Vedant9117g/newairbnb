@@ -71,7 +71,7 @@
       >
         <div>
           <label for="rating" class="block text-gray-700 font-medium mb-2">Rating</label>
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-2" id="star-rating">
             <% for (let i = 1; i <= 5; i++) { %>
               <input
                 type="radio"
@@ -152,4 +152,56 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const stars = document.querySelectorAll('#star-rating label');
+      stars.forEach((star, index) => {
+        star.addEventListener('mouseover', () => {
+          stars.forEach((s, i) => {
+            if (i <= index) {
+              s.classList.add('text-yellow-500');
+              s.classList.remove('text-gray-300');
+            } else {
+              s.classList.add('text-gray-300');
+              s.classList.remove('text-yellow-500');
+            }
+          });
+        });
+
+        star.addEventListener('click', () => {
+          stars.forEach((s, i) => {
+            if (i <= index) {
+              s.classList.add('text-yellow-500');
+              s.classList.remove('text-gray-300');
+            } else {
+              s.classList.add('text-gray-300');
+              s.classList.remove('text-yellow-500');
+            }
+          });
+        });
+      });
+
+      document.querySelector('#star-rating').addEventListener('mouseleave', () => {
+        const checkedStar = document.querySelector('#star-rating input:checked');
+        if (checkedStar) {
+          const checkedIndex = Array.from(stars).indexOf(checkedStar.nextElementSibling);
+          stars.forEach((s, i) => {
+            if (i <= checkedIndex) {
+              s.classList.add('text-yellow-500');
+              s.classList.remove('text-gray-300');
+            } else {
+              s.classList.add('text-gray-300');
+              s.classList.remove('text-yellow-500');
+            }
+          });
+        } else {
+          stars.forEach(s => {
+            s.classList.add('text-gray-300');
+            s.classList.remove('text-yellow-500');
+          });
+        }
+      });
+    });
+  </script>
 </body>
