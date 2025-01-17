@@ -1,72 +1,163 @@
-<nav class="bg-gray-100 border-b sticky top-0 z-50 py-4">
-  <div class="container mx-auto flex items-center justify-between">
-    <a class="text-2xl text-rose-500" href="/"
-      ><i class="fa-regular fa-compass"></i
-    ></a>
-    <button class="lg:hidden text-gray-700">
-      <span class="fa fa-bars"></span>
-    </button>
-    <div class="hidden lg:flex space-x-4">
-      <a
-        class="text-gray-700 hover:text-black transition bn3637 bn38 mx-2"
-        href="/listings"
-        >Explore</a
-      >
-    </div>
-    <div class="hidden lg:flex space-x-4 ml-auto">
-      <div class="flex space-x-2">
-        <input
-          class="form-control p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-white"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button
-          class="btn btn-red bg-rose-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 transition"
-          id="search-btn"
-          type="submit"
-        >
-          Search
-        </button>
-      </div>
-    </div>
-    <div class="hidden lg:flex space-x-4 ml-auto">
-      <a
-        class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-gray-300 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        href="/listings/new"
-        >List your property</a
-      >
-      <a
-        class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-gray-300 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        href="/chats"
-        >Chats</a
-      >
+<nav class="bg-white shadow-md sticky top-0 z-50">
+  <div class="container gap-14 mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/listings" class="text-2xl text-rose-500 font-bold flex items-center">
+      <i class="fa-regular fa-compass mr-2"></i> Ascalon
+    </a>
 
-        <a
-          class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-gray-300 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          href="/profile"
-          >Profile</a
-        >
-    
-        <% if (!currUser) { %>
-          
+    <!-- Hamburger Menu (Mobile) -->
+    <button
+      class="lg:hidden text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+      id="mobile-menu-toggle"
+    >
+      <i class="fa fa-bars text-xl"></i>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="hidden lg:flex space-x-6 items-center">
       <a
-        class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-gray-300 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        href="/listings"
+        class="text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        Explore
+      </a>
+      <a
+        href="/listings/new"
+        class="text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        List Your Property
+      </a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="hidden lg:flex items-center space-x-2">
+      <input
+        type="text"
+        placeholder="Search"
+        class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-rose-200"
+      />
+      <button
+        class="bg-green-100 text-green-600 px-4 py-2 rounded-lg hover:bg-rose-600 transition"
+      >
+        Search
+      </button>
+    </div>
+
+    <!-- User Actions -->
+    <div class="hidden lg:flex items-center space-x-4 ml-auto">
+      <% if (!currUser) { %>
+      <a
         href="/signup"
-        >Sign Up</a
+        class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 hover:text-gray-700 transition"
       >
+        Sign Up
+      </a>
       <a
-        class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-gray-300 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         href="/login"
-        >Log In</a
+        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-rose-600 transition"
       >
+        Log In
+      </a>
+      <% } else { %>
+      <!-- Dropdown for Logged-in User -->
+      <div class="relative">
+        <button
+          class="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-lg hover:bg-gray-200 transition focus:outline-none"
+          id="user-menu-toggle"
+        >
+          <i class="fa fa-user-circle text-gray-600 text-xl"></i>
+          <span class="text-gray-600 font-medium"><%= currUser.username %></span>
+          <i class="fa fa-chevron-down text-gray-500"></i>
+        </button>
+        <div
+          class="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg w-40 hidden"
+          id="user-menu"
+        >
+          <a
+            href="/profile"
+            class="block px-4 py-2 text-gray-600 hover:bg-gray-100 transition"
+          >
+            Profile
+          </a>
+          <a
+            href="/logout"
+            class="block px-4 py-2 text-gray-600 hover:bg-gray-100 transition"
+          >
+            Log Out
+          </a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="lg:hidden bg-white border-t border-gray-200 hidden" id="mobile-menu">
+    <div class="space-y-4 p-4">
+      <a
+        href="/listings"
+        class="block text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        Explore
+      </a>
+      <a
+        href="/listings/new"
+        class="block text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        List Your Property
+      </a>
+      <% if (!currUser) { %>
+      <a
+        href="/signup"
+        class="block text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        Sign Up
+      </a>
+      <a
+        href="/login"
+        class="block text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        Log In
+      </a>
       <% } else { %>
       <a
-        class="rounded-md border border-transparent py-2 px-4 text-center text-sm transition-all text-slate-600 hover:bg-gray-300 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        href="/logout"
-        >Log Out</a
+        href="/profile"
+        class="block text-gray-600 hover:text-rose-500 font-medium transition"
       >
+        Profile
+      </a>
+      <a
+        href="/logout"
+        class="block text-gray-600 hover:text-rose-500 font-medium transition"
+      >
+        Log Out
+      </a>
       <% } %>
     </div>
   </div>
 </nav>
+
+
+<script>
+  // Mobile Menu Toggle
+document.getElementById("mobile-menu-toggle").addEventListener("click", () => {
+  const menu = document.getElementById("mobile-menu");
+  menu.classList.toggle("hidden");
+});
+
+// User Dropdown Menu Toggle
+document.getElementById("user-menu-toggle")?.addEventListener("click", () => {
+  const menu = document.getElementById("user-menu");
+  menu.classList.toggle("hidden");
+});
+
+// Close Dropdown if Clicked Outside
+document.addEventListener("click", (e) => {
+  const menu = document.getElementById("user-menu");
+  const toggle = document.getElementById("user-menu-toggle");
+  if (menu && !menu.classList.contains("hidden") && !toggle.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.add("hidden");
+  }
+});
+
+</script>

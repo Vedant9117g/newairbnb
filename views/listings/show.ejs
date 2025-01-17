@@ -115,7 +115,8 @@
 
     <!-- Reviews Section -->
     <div class="mt-12">
-      <h4 class="text-3xl font-semibold text-gray-900 mb-8">All Reviews</h4>
+      <% if (listing.reviews && listing.reviews.length > 0) { %>
+        <h4 class="text-3xl font-semibold text-gray-900 mb-8">All Reviews</h4>
       <div class="space-y-6">
         <% if (listing.reviews && listing.reviews.length > 0) { %>
           <% listing.reviews.forEach(review => { %>
@@ -150,6 +151,7 @@
           <p class="text-gray-500 text-lg">No reviews yet. Be the first to leave one!</p>
         <% } %>
       </div>
+      <% } %>
     </div>
   </div>
 

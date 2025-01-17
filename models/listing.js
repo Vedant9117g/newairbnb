@@ -37,6 +37,9 @@ const listingSchema = new Schema({
       ref: "Review",
     },
   ],
+  tags: [{
+    type: String,
+  }],
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
